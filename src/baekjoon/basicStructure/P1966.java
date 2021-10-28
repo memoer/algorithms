@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.basicStructure;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+// * 큐, 구현, 그리디
 class Node {
   int priority;
   int index;
