@@ -1,3 +1,3 @@
 ### Notion 기록 Link
 
-- https://jnam.notion.site/245a161c75d14b1baeb31cd2c3652cfd
+- https://jnam.notion.site/3a57997df12848f093fb434e7fef4c4c
