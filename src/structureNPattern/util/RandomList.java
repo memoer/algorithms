@@ -1,4 +1,4 @@
-package baekjoon.util;
+package structureNPattern.util;
 
 public class RandomList {
   private static boolean isDuplicated(int[] list, int number) {

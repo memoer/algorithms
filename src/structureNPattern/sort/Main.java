@@ -1,4 +1,4 @@
-package baekjoon.sort;
+package structureNPattern.sort;
 
 import util.RandomList;
 

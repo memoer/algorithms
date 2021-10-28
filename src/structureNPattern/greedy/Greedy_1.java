@@ -1,4 +1,4 @@
-package baekjoon.greedy;
+package structureNPattern.greedy;
 
 import java.util.Arrays;
 import java.util.Comparator;

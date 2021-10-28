@@ -1,4 +1,4 @@
-package baekjoon.sort;
+package structureNPattern.sort;
 
 public abstract class Sort {
 

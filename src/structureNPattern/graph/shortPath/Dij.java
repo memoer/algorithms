@@ -1,4 +1,4 @@
-package baekjoon.graph.shortPath;
+package structureNPattern.graph.shortPath;
 
 import java.util.ArrayList;
 import java.util.Arrays;

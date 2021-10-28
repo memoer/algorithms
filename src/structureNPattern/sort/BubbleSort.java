@@ -1,4 +1,4 @@
-package baekjoon.sort;
+package structureNPattern.sort;
 
 public class BubbleSort extends Sort {
   private void swap(int[] list, int i, int j) {

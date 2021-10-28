@@ -1,13 +1,14 @@
-package baekjoon.graph.search;
+package structureNPattern.graph.search;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
+import java.util.Map;
+import java.util.Queue;
 
-// DFS는 Stack 을 사용
-public class DFS {
+// BFS는 Queue 을 사용함
+public class BFS {
   private static Map<Character, char[]> graph;
 
   public static void init() {
@@ -33,18 +34,16 @@ public class DFS {
 
   public static void main(String[] args) throws Exception {
     char startNode = 'A';
-    Stack<Character> needVisit = new Stack<Character>();
+    Queue<Character> needVisit = new LinkedList<Character>();
     List<Character> visitedNode = new ArrayList<Character>();
     init();
     needVisit.add(startNode);
     while (!needVisit.isEmpty()) {
-      char nodeToVisit = needVisit.pop();
-      // 방문한 노드
+      char nodeToVisit = needVisit.poll();
       visitedNode.add(nodeToVisit);
       char[] adjacentNodeList = graph.get(nodeToVisit);
       for (char node : adjacentNodeList) {
         if (!visitedNode.contains(node)) {
-          // 방문하지 않은 노드만
           needVisit.add(node);
         }
       }

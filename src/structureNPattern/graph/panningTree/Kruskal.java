@@ -1,4 +1,4 @@
-package baekjoon.graph.panningTree;
+package structureNPattern.graph.panningTree;
 
 import java.util.ArrayList;
 import java.util.Arrays;

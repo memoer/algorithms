@@ -1,4 +1,4 @@
-package baekjoon.sort;
+package structureNPattern.sort;
 
 public class InsertSort extends Sort {
   private void insert(int[] list, int i, int j) {
