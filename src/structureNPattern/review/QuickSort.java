@@ -15,18 +15,6 @@ public class QuickSort {
   static class Solution {
     static final int LENGTH = 10;
 
-    private int[] createNewArr(int newArrLength, int mid, int pivot, List<Integer> left, List<Integer> right) {
-      int[] newArr = new int[newArrLength];
-      for (int i = 0; i < left.size(); i++) {
-        newArr[i] = left.get(i);
-      }
-      newArr[mid] = pivot;
-      for (int i = 0; i < right.size(); i++) {
-        newArr[i] = right.get(i);
-      }
-      return newArr;
-    }
-
     private void addNumToLeftNRight(List<Integer> list, int pivot, List<Integer> left, List<Integer> right) {
       for (int num : list) {
         if (num == -1) {
