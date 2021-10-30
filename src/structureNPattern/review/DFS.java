@@ -2,17 +2,16 @@ package structureNPattern.review;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Stack;
 
-// BFS는 Queue 을 사용함
-public class BFS {
+// DFS는 Stack을 사용함
+public class DFS {
   static class Solution {
     private Map<Character, char[]> graph;
 
-    public void init(char startNode, List<Character> answer, Queue<Character> q) {
+    public void init(char startNode, List<Character> answer, Stack<Character> s) {
       graph = new HashMap<Character, char[]>();
       graph.put('A', new char[] { 'B', 'C' });
       graph.put('B', new char[] { 'D' });
@@ -24,18 +23,18 @@ public class BFS {
       graph.put('H', new char[] {});
       graph.put('I', new char[] { 'J' });
       graph.put('J', new char[] {});
-      q.add(startNode);
+      s.add(startNode);
     }
 
     public List<Character> solution(char startNode) {
       List<Character> answer = new ArrayList<>();
-      Queue<Character> q = new LinkedList<>();
-      init(startNode, answer, q);
-      while (!q.isEmpty()) {
-        char node = q.poll();
+      Stack<Character> s = new Stack<>();
+      init(startNode, answer, s);
+      while (!s.isEmpty()) {
+        char node = s.pop();
         answer.add(node);
         for (char adjNode : graph.get(node)) {
-          q.add(adjNode);
+          s.push(adjNode);
         }
       }
       return answer;
