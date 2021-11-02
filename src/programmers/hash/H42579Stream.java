@@ -37,8 +37,8 @@ public class H42579Stream {
   }
 
   public static int[] solution(String[] genres, int[] plays) {
-    // Entry<String, List<Music>>
-    // Stream<Music>
+    // flatMap 없을 시 -> Stream< Entry<String, List<Music>> >
+    // flatMap 있을 시 -> Stream< Music >
     return IntStream.range(0, genres.length).mapToObj(i -> new Music(genres[i], plays[i], i))
         .collect(Collectors.groupingBy(Music::getGenre)).entrySet().stream()
         .sorted((a, b) -> sum(b.getValue()) - sum(a.getValue())).flatMap(x -> x.getValue().stream().sorted().limit(2))
