@@ -24,8 +24,8 @@ public class R42576 {
   }
 
   public static void main(String[] args) {
-    String[] participant;
-    String[] completion;
+    String[] participant = {};
+    String[] completion = {};
     new Solution().solution(participant, completion);
   }
 }

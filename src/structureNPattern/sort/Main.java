@@ -1,6 +1,6 @@
 package structureNPattern.sort;
 
-import util.RandomList;
+import structureNPattern.util.RandomList;
 
 enum SortType {
   // 내림차순, 오름차순
@@ -16,9 +16,9 @@ public class Main {
   }
 
   public static void main(String args[]) throws Exception {
-    SelectSort ss = new SelectSort();
-    BubbleSort bs = new BubbleSort();
-    InsertSort is = new InsertSort();
+    // SelectSort ss = new SelectSort();
+    // BubbleSort bs = new BubbleSort();
+    // InsertSort is = new InsertSort();
     MergeSort ms = new MergeSort();
     init();
     ms.print(list);
