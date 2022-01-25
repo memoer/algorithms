@@ -2,7 +2,7 @@ package programmers.sort;
 
 import java.util.Arrays;
 
-public class S42758 {
+public class S42748 {
   static class Solution {
     public int[] solution(int[] array, int[][] commands) {
       int[] answer = new int[commands.length];
