@@ -2,7 +2,7 @@ package programmers.sort;
 
 import java.util.Arrays;
 
-public class H42747 {
+public class S42747 {
   static class Solution {
     public int solution(int[] citations) {
       int answer = -1;
