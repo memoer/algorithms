@@ -1,8 +1,8 @@
-package programmers.DFSNBFS;
+package programmers.DFSnBFS;
 
 import java.util.Stack;
 
-public class D43162 {
+public class Bfs43162 {
   static class Solution {
 
     public int solution(int n, int[][] computers) {

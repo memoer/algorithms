@@ -1,4 +1,4 @@
-package programmers.DFSNBFS;
+package programmers.DFSnBFS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import java.util.List;
 // 정답! 풀었따
 // ? 앞에 문자열을 기반으로 알파벳 순서 sorting
 // ? 앞에 문자열이 같다면, 뒤의 문자열 기반으로 알파벳 순서 sorting
-public class D43164Re {
+public class D43164_2 {
   static class Solution {
     private final String START_AIRPLANE = "ICN";
     private boolean isSearched = false;
