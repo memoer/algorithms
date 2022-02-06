@@ -1,4 +1,4 @@
-package baekjoon.basicStructure;
+package baekjoon.기본자료구조;
 
 import java.io.BufferedReader;
 import java.io.IOException;

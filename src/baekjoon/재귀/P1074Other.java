@@ -1,10 +1,10 @@
-package baekjoon.recursive;
+package baekjoon.재귀;
 
 import java.util.Scanner;
 
 // 재귀 풀 때, 모든 경우의 수를 재귀로 돌리려 하지 말아라! 이것이 함정이다.
 // 최대한 수를 줄일 것!!!
-public class I_P1074 {
+public class P1074Other {
   public static int answer = -1;
 
   public static int getAnswer(int N, int r, int c) {

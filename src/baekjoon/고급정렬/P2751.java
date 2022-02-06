@@ -1,4 +1,4 @@
-package baekjoon.advancedSort;
+package baekjoon.고급정렬;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

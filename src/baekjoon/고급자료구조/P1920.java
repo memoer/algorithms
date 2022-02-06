@@ -1,4 +1,4 @@
-package baekjoon.advancedStructure;
+package baekjoon.고급자료구조;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 public class P1920 {
   public static void main(String[] args) throws Exception {
     Scanner sc = new Scanner(System.in);
-    String N = sc.nextLine();
-    Set<Integer> set = Arrays.stream(sc.nextLine().split(" ")).mapToInt(x -> Integer.valueOf(x)).boxed()
+    Set<Integer> set = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::valueOf).boxed()
         .collect(Collectors.toSet());
-    int M = Integer.valueOf(sc.nextLine());
-    int[] b = Arrays.stream(sc.nextLine().split(" ")).mapToInt(x -> Integer.valueOf(x)).toArray();
+    final int M = Integer.parseInt(sc.nextLine());
+    int[] b = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::valueOf).toArray();
     boolean[] result = new boolean[M];
     for (int i = 0; i < b.length; i++) {
       result[i] = set.contains(b[i]);

@@ -1,4 +1,4 @@
-package baekjoon.advancedStructure;
+package baekjoon.고급자료구조;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

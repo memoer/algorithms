@@ -1,25 +1,24 @@
-package baekjoon.basicSort;
+package baekjoon.기본정렬;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
-public class P10989 {
+public class P2750 {
 
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     int N = Integer.valueOf(br.readLine());
-    int[] answer = new int[10001];
+    int[] answer = new int[N];
     for (int i = 0; i < N; i++) {
-      int num = Integer.valueOf(br.readLine());
-      answer[num]++;
+      answer[i] = Integer.valueOf(br.readLine());
     }
-    for (int i = 1; i < answer.length; i++) {
-      for (int j = 0; j < answer[i]; j++) {
-        bw.write(i + "\n");
-      }
+    Arrays.sort(answer);
+    for (int num : answer) {
+      bw.write(num + "\n");
     }
     bw.flush();
     bw.close();

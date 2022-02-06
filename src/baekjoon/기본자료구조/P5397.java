@@ -1,4 +1,4 @@
-package baekjoon.basicStructure;
+package baekjoon.기본자료구조;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,24 +18,24 @@ public class P5397 {
       String str = br.readLine();
       for (char c : str.toCharArray()) {
         switch (c) {
-        case '<':
-          if (!ls.isEmpty()) {
-            rs.push(ls.pop());
-          }
-          break;
-        case '>':
-          if (!rs.isEmpty()) {
-            ls.push(rs.pop());
-          }
-          break;
-        case '-':
-          if (!ls.isEmpty()) {
-            ls.pop();
-          }
-          break;
-        default:
-          ls.push(c);
-          break;
+          case '<':
+            if (!ls.isEmpty()) {
+              rs.push(ls.pop());
+            }
+            break;
+          case '>':
+            if (!rs.isEmpty()) {
+              ls.push(rs.pop());
+            }
+            break;
+          case '-':
+            if (!ls.isEmpty()) {
+              ls.pop();
+            }
+            break;
+          default:
+            ls.push(c);
+            break;
         }
       }
       while (!rs.isEmpty()) {
