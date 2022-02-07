@@ -2,24 +2,24 @@ package baekjoon.기본탐색;
 
 import java.util.Scanner;
 
-// ? 탐색
 public class P1568 {
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    int N = Integer.valueOf(sc.nextLine());
-    int answer = 0;
-    int temp = 1;
-    sc.close();
-    while (N != 0) {
-      if (temp <= N) {
-        N -= temp++;
-        answer++;
-        continue;
+
+    int n = Integer.parseInt(sc.nextLine());
+    int result = 0;
+    int k = 1;
+
+    while (n != 0) {
+      if (n < k) {
+        k = 1;
       }
-      temp = 1;
-      N -= temp++;
-      answer++;
+      n -= k++;
+      result += 1;
     }
-    System.out.println(answer);
+
+    System.out.println(result);
+
+    sc.close();
   }
 }
