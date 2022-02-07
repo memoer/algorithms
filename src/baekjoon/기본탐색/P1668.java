@@ -1,46 +1,37 @@
-package baekjoon.기본탐색;
+package temp.b;
 
 import java.util.Scanner;
 
-// ? 탐색
 public class P1668 {
-  public static void main(String[] args) throws Exception {
+
+  public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    int N = Integer.valueOf(sc.nextLine());
+    final int N = Integer.parseInt(sc.nextLine());
     int[] arr = new int[N];
-    int[] answer = new int[2];
-    int max = 0;
+    int max = Integer.MIN_VALUE;
     int maxIdx = -1;
+    int l = 0;
+    int r = 0;
+
     for (int i = 0; i < N; i++) {
-      int num = Integer.valueOf(sc.nextLine());
-      arr[i] = num;
-      if (i == 0) {
-        max = num;
+      arr[i] = Integer.parseInt(sc.nextLine());
+      if (max < arr[i]) {
+        max = arr[i];
         maxIdx = i;
-        answer[0]++;
-        continue;
-      }
-      if (num > max) {
-        max = num;
-        answer[0]++;
-        maxIdx = i;
+        l += 1;
       }
     }
-    max = 0;
+    max = Integer.MIN_VALUE;
     for (int i = N - 1; i >= maxIdx; i--) {
-      int num = arr[i];
-      if (i == N - 1) {
-        max = num;
-        answer[1]++;
-        continue;
-      }
-      if (num > max) {
-        max = num;
-        answer[1]++;
+      if (max < arr[i]) {
+        max = arr[i];
+        r += 1;
       }
     }
-    System.out.println(answer[0]);
-    System.out.println(answer[1]);
+
+    System.out.println(l);
+    System.out.println(r);
+
     sc.close();
   }
 }
