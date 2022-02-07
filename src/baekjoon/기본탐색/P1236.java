@@ -1,42 +1,41 @@
 package baekjoon.기본탐색;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-// ? 탐색
 public class P1236 {
-  public static void main(String[] args) throws Exception {
-    Scanner sc = new Scanner(System.in);
-    String[] input = sc.nextLine().split(" ");
-    int row = Integer.valueOf(input[0]);
-    int col = Integer.valueOf(input[1]);
-    char[][] board = new char[row][col];
-    int[] candidate = new int[2];
-    for (int i = 0; i < row; i++) {
-      String s = sc.nextLine();
-      boolean exist = false;
-      for (int j = 0; j < s.length(); j++) {
-        board[i][j] = s.charAt(j);
-        if (s.charAt(j) == 'X') {
-          exist = true;
-        }
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer st = new StringTokenizer(br.readLine());
+    final int N = Integer.parseInt(st.nextToken());
+    final int M = Integer.parseInt(st.nextToken());
+    char[][] grid = new char[N][M];
+    int rowEmpty = 0;
+    int colEmpty = 0;
+
+    for (int i = 0; i < N; i++) {
+      String s = new StringTokenizer(br.readLine()).nextToken();
+      for (int j = 0; j < M; j++) {
+        grid[i][j] = s.charAt(j);
       }
-      if (!exist) {
-        candidate[0]++;
+      if (!s.contains("X")) {
+        rowEmpty += 1;
       }
     }
-    for (int i = 0; i < col; i++) {
-      boolean exist = false;
-      for (int j = 0; j < row; j++) {
-        if (board[j][i] == 'X') {
-          exist = true;
-          break;
-        }
+
+    for (int col = 0; col < M; col++) {
+      StringBuilder sb = new StringBuilder();
+      for (int row = 0; row < N; row++) {
+        sb.append(grid[row][col]);
       }
-      if (!exist) {
-        candidate[1]++;
+      if (!sb.toString().contains("X")) {
+        colEmpty += 1;
       }
     }
-    System.out.println(Math.max(candidate[0], candidate[1]));
-    sc.close();
+    System.out.println(Math.max(rowEmpty, colEmpty));
+
+    br.close();
   }
 }
