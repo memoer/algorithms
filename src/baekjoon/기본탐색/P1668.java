@@ -1,4 +1,4 @@
-package temp.b;
+package baekjoon.기본탐색;
 
 import java.util.Scanner;
 
