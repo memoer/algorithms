@@ -2,7 +2,7 @@ package baekjoon.동적프로그래밍;
 
 import java.util.Scanner;
 
-// LCS -> 다이나믹 프로그래밍중에서도 아주 기초 중의 기초라는데..? 
+// ! LCS -> 다이나믹 프로그래밍중에서도 아주 기초 중의 기초라는데..? 
 public class P9251 {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
