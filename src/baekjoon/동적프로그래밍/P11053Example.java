@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
+ * ! LIS - 가장 긴 증가하는 부분 수열
  * 반례 -> 6 / 1 3 5 2 3 4
  */
 public class P11053Example {

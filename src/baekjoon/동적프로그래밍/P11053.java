@@ -3,6 +3,7 @@ package baekjoon.동적프로그래밍;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+// ! LIS - 가장 긴 증가하는 부분 수열
 public class P11053 {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
