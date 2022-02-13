@@ -1,26 +1,34 @@
 package baekjoon.동적프로그래밍;
 
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class P11053 {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     final int N = Integer.parseInt(sc.nextLine());
-    int[] arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(m -> Integer.parseInt(m)).toArray();
+    StringTokenizer st = new StringTokenizer(sc.nextLine());
+    int[] dataList = new int[N];
     int[] dp = new int[N];
-    int result = 0;
+    int result = Integer.MIN_VALUE;
 
+    for (int i = 0; i < N; i++) {
+      dataList[i] = Integer.parseInt(st.nextToken());
+      dp[i] = 1;
+    }
     for (int i = 1; i < N; i++) {
       for (int j = 0; j < i; j++) {
-        if (arr[j] < arr[i]) {
+        if (dataList[i] > dataList[j]) {
           dp[i] = Math.max(dp[i], dp[j] + 1);
         }
       }
-      result = Math.max(result, dp[i]);
     }
 
-    System.out.println(result + 1);
+    for (int num : dp) {
+      result = Math.max(result, num);
+    }
+    System.out.println(result);
+
     sc.close();
   }
 }
