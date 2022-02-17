@@ -40,7 +40,6 @@ public class P1012 {
       final int M = Integer.parseInt(st.nextToken());
       final int N = Integer.parseInt(st.nextToken());
       final int K = Integer.parseInt(st.nextToken());
-      boolean[][] visited = new boolean[N][M];
       boolean[][] grid = new boolean[N][M];
 
       for (int j = 0; j < K; j++) {
@@ -52,18 +51,18 @@ public class P1012 {
 
       for (int n = 0; n < N; n++) {
         for (int m = 0; m < M; m++) {
-          if (!grid[n][m] || visited[n][m]) {
+          if (!grid[n][m]) {
             continue;
           }
-          visited[n][m] = true;
+          grid[n][m] = false;
           needVisit.offer(new int[] { n, m });
           while (!needVisit.isEmpty()) {
             int[] location = needVisit.poll();
             for (int[] adj : getAdjLocation(location, N, M)) {
               int y = adj[0];
               int x = adj[1];
-              if (grid[y][x] && !visited[y][x]) {
-                visited[y][x] = true;
+              if (grid[y][x]) {
+                grid[y][x] = false;
                 needVisit.offer(new int[] { y, x });
               }
             }
