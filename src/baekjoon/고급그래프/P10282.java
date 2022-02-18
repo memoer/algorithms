@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
+// ! 메모리 부족이 계속해서 떴음
+// * int[]는 메모리 낭비가 심하므로, ArrayList[]를 활용하여 사용하는 데이터만 저장할 것
+// * 그 외 참고 링크 -> https://www.acmicpc.net/source/39227204
 public class P10282 {
   private static int n;
   private static int d;
