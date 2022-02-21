@@ -34,6 +34,7 @@ public class P2655 {
     Brick[] arr = new Brick[N];
     int max = Integer.MIN_VALUE;
     Stack<Integer> result = new Stack<>();
+
     arr[0] = new Brick(0, 0, 0, 0);
     for (int i = 1; i < N; i++) {
       st = new StringTokenizer(br.readLine());
@@ -43,8 +44,8 @@ public class P2655 {
       arr[i] = new Brick(area, height, weight, i);
     }
     br.close();
-
     Arrays.sort(arr, (pre, cur) -> pre.area - cur.area);
+
     for (int i = 1; i < N; i++) {
       for (int j = 0; j < i; j++) {
         if (arr[i].weight > arr[j].weight) {
@@ -61,6 +62,7 @@ public class P2655 {
       }
     }
 
+    // 49줄 로직을 생각해보면, 벽돌을 위에다 쌓는 구조임
     bw.write(result.size() + "\n");
     while (!result.isEmpty()) {
       bw.write(result.pop() + "\n");
