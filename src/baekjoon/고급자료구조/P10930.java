@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.고급자료구조;
 
 import java.security.MessageDigest;
 import java.util.Scanner;
