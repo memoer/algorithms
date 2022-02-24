@@ -10,42 +10,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.StringTokenizer;
 
 public class P5719 {
-
-  private static class Node implements Comparable<Node> {
-    public int idx;
-    public int path;
-
-    public Node(int idx, int path) {
-      this.idx = idx;
-      this.path = path;
-    }
-
-    @Override
-    public int compareTo(Node o) {
-      return this.path - o.path;
-    }
-  }
-
+  private static int[] dist;
   private static List<Node>[] graph;
-  private static List<Node>[] reverseGraph;
-  private static int[] distArr;
   private static boolean[][] dropped;
-
-  private static void initDistArr(final int N, final int START) {
-    for (int i = 0; i < N; i++) {
-      if (i != START) {
-        distArr[i] = Integer.MAX_VALUE;
-      }
-    }
-  }
+  private static List<Node>[] reverseGraph;
 
   private static void dijkstra(final int N, final int START) {
-    initDistArr(N, START);
+    for (int i = 0; i < N; i++) {
+      dist[i] = Integer.MAX_VALUE;
+    }
+    dist[START] = 0;
+
     PriorityQueue<Node> pq = new PriorityQueue<>();
     pq.offer(new Node(START, 0));
+
     while (!pq.isEmpty()) {
       Node cur = pq.poll();
       if (graph[cur.idx] == null) {
@@ -55,9 +35,9 @@ public class P5719 {
         if (dropped[cur.idx][adj.idx]) {
           continue;
         }
-        int sum = distArr[cur.idx] + adj.path;
-        if (sum < distArr[adj.idx]) {
-          distArr[adj.idx] = sum;
+        int sum = cur.path + adj.path;
+        if (dist[adj.idx] > sum) {
+          dist[adj.idx] = sum;
           pq.offer(new Node(adj.idx, sum));
         }
       }
@@ -73,7 +53,7 @@ public class P5719 {
         continue;
       }
       for (Node adj : reverseGraph[cur.idx]) {
-        if (distArr[adj.idx] + adj.path == distArr[cur.idx]) {
+        if (dist[adj.idx] + adj.path == dist[cur.idx]) {
           q.offer(adj);
           dropped[adj.idx][cur.idx] = true;
         }
@@ -84,44 +64,40 @@ public class P5719 {
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    StringTokenizer st;
 
     while (true) {
-      st = new StringTokenizer(br.readLine());
-      final int N = Integer.parseInt(st.nextToken());
-      final int M = Integer.parseInt(st.nextToken());
-      if (N == 0) {
+      String[] input = br.readLine().split(" ");
+      final int N = Integer.parseInt(input[0]);
+      final int M = Integer.parseInt(input[1]);
+      if (N == 0 && M == 0) {
         break;
       }
-      st = new StringTokenizer(br.readLine());
-      final int START = Integer.parseInt(st.nextToken());
-      final int END = Integer.parseInt(st.nextToken());
-
+      dist = new int[N];
       graph = new ArrayList[N];
       reverseGraph = new ArrayList[N];
+      dropped = new boolean[N][N];
+
+      input = br.readLine().split(" ");
+      final int START = Integer.parseInt(input[0]);
+      final int END = Integer.parseInt(input[1]);
+
       for (int i = 0; i < M; i++) {
-        st = new StringTokenizer(br.readLine());
-        int u = Integer.parseInt(st.nextToken());
-        int v = Integer.parseInt(st.nextToken());
-        int p = Integer.parseInt(st.nextToken());
+        input = br.readLine().split(" ");
+        int u = Integer.parseInt(input[0]);
+        int v = Integer.parseInt(input[1]);
+        int p = Integer.parseInt(input[2]);
         if (graph[u] == null) {
           graph[u] = new ArrayList<>();
         }
-        if (reverseGraph[v] == null) {
-          reverseGraph[v] = new ArrayList<>();
-        }
         graph[u].add(new Node(v, p));
-        reverseGraph[v].add(new Node(u, p));
       }
 
-      dropped = new boolean[N][N];
-      distArr = new int[N];
       dijkstra(N, START);
       bfs(START, END);
       dijkstra(N, START);
 
-      if (distArr[END] != Integer.MAX_VALUE) {
-        bw.write(distArr[END] + "\n");
+      if (dist[END] != Integer.MAX_VALUE) {
+        bw.write(dist[END] + "\n");
       } else {
         bw.write(-1 + "\n");
       }
@@ -130,5 +106,20 @@ public class P5719 {
     bw.flush();
     bw.close();
     br.close();
+  }
+
+  private static class Node implements Comparable<Node> {
+    public int idx;
+    public int path;
+
+    public Node(int idx, int path) {
+      this.idx = idx;
+      this.path = path;
+    }
+
+    @Override
+    public int compareTo(Node o) {
+      return this.path - o.path;
+    }
   }
 }
