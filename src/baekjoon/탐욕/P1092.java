@@ -4,43 +4,48 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class P1092 {
   public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    // 크레인 수
-    final int N = Integer.parseInt(br.readLine());
-    StringTokenizer st = new StringTokenizer(br.readLine());
-    int[] train = new int[N];
     int result = 0;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    final int N = Integer.parseInt(br.readLine());
+    int[] trainArr = new int[N];
+    StringTokenizer st = new StringTokenizer(br.readLine());
     for (int i = 0; i < N; i++) {
-      train[i] = Integer.parseInt(st.nextToken());
+      trainArr[i] = Integer.parseInt(st.nextToken());
     }
     final int M = Integer.parseInt(br.readLine());
+    int[] boxArr = new int[M];
     st = new StringTokenizer(br.readLine());
-    PriorityQueue<Integer> box = new PriorityQueue<>(Collections.reverseOrder());
     for (int i = 0; i < M; i++) {
-      box.offer(Integer.parseInt(st.nextToken()));
+      boxArr[i] = Integer.parseInt(st.nextToken());
     }
     br.close();
 
-    Arrays.sort(train);
-    if (train[N - 1] < box.peek()) {
-      result = -1;
-    } else {
-      while (!box.isEmpty()) {
-        for (int i = N - 1; i >= 0; i--) {
-          if (box.isEmpty()) {
-            break;
-          } else if (train[i] >= box.peek()) {
-            box.poll();
-          }
+    Arrays.sort(trainArr);
+    Arrays.sort(boxArr);
+    if (trainArr[N - 1] < boxArr[M - 1]) {
+      System.out.println(-1);
+      System.exit(0);
+    }
+    int boxSize = M;
+    while (boxSize > 0) {
+      int i = N - 1;
+      int j = M - 1;
+      while (i >= 0 && j >= 0) {
+        if (boxArr[j] == -1) {
+          j -= 1;
+        } else if (trainArr[i] >= boxArr[j]) {
+          i -= 1;
+          boxSize -= 1;
+          boxArr[j--] = -1;
+        } else {
+          j -= 1;
         }
-        result += 1;
       }
+      result += 1;
     }
     System.out.println(result);
   }
