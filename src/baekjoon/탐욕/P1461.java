@@ -1,38 +1,58 @@
 package baekjoon.탐욕;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class P1461 {
+  private static int result = 0;
+
+  private static void locateLastBook(PriorityQueue<Integer> pq, int M) {
+    result += pq.poll();
+    for (int i = 0; i < M - 1; i++) {
+      if (pq.isEmpty()) {
+        return;
+      }
+      pq.poll();
+    }
+  }
+
+  private static boolean locateBook(PriorityQueue<Integer> pq, int M) {
+    result += (pq.poll() * 2);
+    for (int i = 0; i < M - 1; i++) {
+      if (pq.isEmpty()) {
+        return false;
+      }
+      pq.poll();
+    }
+    return true;
+  }
+
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     final int N = sc.nextInt();
     final int M = sc.nextInt();
-    int result = 0;
-    int[] location = new int[N];
-    boolean last = false;
+    PriorityQueue<Integer> minus = new PriorityQueue<>(Collections.reverseOrder());
+    PriorityQueue<Integer> plus = new PriorityQueue<>(Collections.reverseOrder());
     for (int i = 0; i < N; i++) {
-      location[i] = sc.nextInt();
-    }
-    Arrays.sort(location);
-    for (int i = 0; i < N; i += M) {
-      if (i + 1 >= N) {
-        result += Math.abs(location[i]);
-        last = true;
+      int num = sc.nextInt();
+      if (num > 0) {
+        plus.offer(num);
       } else {
-        int a = location[i];
-        int b = location[i + 1];
-        if (a <= 0 && b <= 0) {
-          result += (Math.abs(b) + (b - a) + Math.abs(a));
-        } else if (a >= 0 && b >= 0) {
-          result += (a + (b - a) + b);
-        } else {
-          result += (Math.abs(a) + (b - a) + b);
-        }
+        minus.offer(Math.abs(num));
       }
     }
-    if (!last) {
-      result -= location[N - 1];
+
+    if (!minus.isEmpty() && !plus.isEmpty()) {
+      locateLastBook(minus.peek() > plus.peek() ? minus : plus, M);
+    } else if (!minus.isEmpty()) {
+      locateLastBook(minus, M);
+    } else {
+      locateLastBook(plus, M);
+    }
+    while (!minus.isEmpty() && locateBook(minus, M)) {
+    }
+    while (!plus.isEmpty() && locateBook(plus, M)) {
     }
 
     System.out.println(result);
