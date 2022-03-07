@@ -1,4 +1,4 @@
-package programmers.Greedy;
+package programmers.greedy;
 
 public class G42862 {
   static class Solution {
