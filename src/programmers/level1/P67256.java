@@ -2,11 +2,11 @@ package programmers.level1;
 
 public class P67256 {
   static class Solution {
-    private final int[] LEFT = { 1, 4, 7 };
-    private final int[] RIGHT = { 3, 6, 9 };
+    private final int[] LEFT = { 1, 4, 7, -1 };
+    private final int[] RIGHT = { 3, 6, 9, -1 };
     StringBuilder sb = new StringBuilder();
-    private int leftY = -1;
-    private int rightY = -1;
+    private int left = -1;
+    private int right = -1;
 
     private int getY(int number) {
       switch (number) {
@@ -31,9 +31,9 @@ public class P67256 {
     private void useHand(char whichHand, int number) {
       sb.append(whichHand);
       if (whichHand == 'L') {
-        leftY = getY(number);
+        left = number;
       } else {
-        rightY = getY(number);
+        right = number;
       }
     }
 
@@ -57,7 +57,10 @@ public class P67256 {
 
     private int[] getDiff(int number) {
       int numberY = getY(number);
-      return new int[] { numberY - leftY + (isLeft(leftY) ? 1 : 0), numberY - rightY + (isRight(rightY) ? 1 : 0) };
+      int leftY = getY(left);
+      int rightY = getY(right);
+      return new int[] { Math.abs(numberY - leftY) + (isLeft(left) ? 1 : 0),
+          Math.abs(numberY - rightY) + (isRight(right) ? 1 : 0) };
     }
 
     public String solution(int[] numbers, String hand) {
@@ -85,7 +88,7 @@ public class P67256 {
   }
 
   public static void main(String[] args) {
-    int[] numbers = { 1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5 };
+    int[] numbers = { 2, 5, 8, 0 };
     String hand = "right";
     System.out.println(new Solution().solution(numbers, hand));
   }
