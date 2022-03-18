@@ -8,3 +8,11 @@ static class Solution {
 public static void main(String[] args) {
   
 }
+
+// A, C, X, J, M, R, T
+// R 5 T 
+// R 4 T 1
+// R 3 T 2
+// 1 R 4 T
+// 1 R 3 T 1
+// 2 R 3 T
