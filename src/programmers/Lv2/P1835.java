@@ -6,18 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 public class P1835 {
-  static class Solution {
-    private int answer;
-    private final char[] PERSON_ARR = { 'A', 'C', 'F', 'J', 'M', 'N', 'R', 'T' };
-    private final int PERSON_LENGTH = 8;
-    private Map<Character, List<Condition>> condition;
-    private Map<Character, Integer> order;
+  public static void main(String[] args) {
+    int n = 2;
+    String[] data = { "N~F=0", "R~T>2" };
+    // String[] data = { "M~C<2", "C~M>1" };
+    System.out.println(new Solution().solution(n, data));
+  }
 
-    private void init(String[] data) {
-      answer = 0;
+  static class Solution {
+    int answer;
+    char[] f;
+    Map<Character, List<Condition>> condition;
+    Map<Character, Integer> order;
+
+    public int solution(int n, String[] data) {
+      f = new char[] { 'A', 'C', 'F', 'J', 'M', 'N', 'R', 'T' };
       condition = new HashMap<>();
       order = new HashMap<>();
-      for (char ch : PERSON_ARR) {
+
+      for (char ch : f) {
         condition.put(ch, new ArrayList<>());
         order.put(ch, 0);
       }
@@ -29,6 +36,25 @@ public class P1835 {
         condition.get(a).add(new Condition(b, op, num));
         condition.get(b).add(new Condition(a, op, num));
       }
+
+      answer = 0;
+      backTracking(1);
+      System.out.println(answer);
+      return answer;
+    }
+
+    private void backTracking(int curLocation) {
+      if (curLocation > f.length) {
+        answer += 1;
+        return;
+      }
+      for (char candidate : f) {
+        if (isAvailable(candidate, curLocation)) {
+          order.put(candidate, curLocation);
+          backTracking(curLocation + 1);
+          order.put(candidate, 0);
+        }
+      }
     }
 
     private boolean visited(char candidate) {
@@ -39,53 +65,31 @@ public class P1835 {
       if (visited(candidate)) {
         return false;
       }
-      boolean[] checked = new boolean[condition.get(candidate).size()];
-      int idx = 0;
       for (Condition c : condition.get(candidate)) {
         if (order.get(c.other) == 0) {
           return true;
         }
-        int preLocation = order.get(c.other);
         switch (c.op) {
           case '=':
-            checked[idx++] = curLocation - preLocation == c.num;
+            if (curLocation - order.get(c.other) != c.num) {
+              return false;
+            }
             break;
           case '<':
-            checked[idx++] = curLocation - preLocation < c.num;
+            if (curLocation - order.get(c.other) >= c.num) {
+              return false;
+            }
             break;
           case '>':
-            checked[idx++] = curLocation - preLocation > c.num;
+            if (curLocation - order.get(c.other) <= c.num) {
+              return false;
+            }
             break;
           default:
             throw new UnsupportedOperationException();
         }
       }
-      for (boolean b : checked) {
-        if (!b) {
-          return false;
-        }
-      }
       return true;
-    }
-
-    private void backTracking(int curLocation) {
-      if (curLocation > PERSON_LENGTH) {
-        answer += 1;
-        return;
-      }
-      for (char candidate : PERSON_ARR) {
-        if (isAvailable(candidate, curLocation)) {
-          order.put(candidate, curLocation);
-          backTracking(curLocation + 1);
-          order.put(candidate, 0);
-        }
-      }
-    }
-
-    public int solution(int n, String[] data) {
-      init(data);
-      backTracking(1);
-      return answer;
     }
 
     class Condition {
@@ -99,12 +103,5 @@ public class P1835 {
         this.num = num + 1;
       }
     }
-  }
-
-  public static void main(String[] args) {
-    int n = 2;
-    String[] data = { "N~F=0", "R~T>2" };
-    // String[] data = { "M~C<2", "C~M>1" };
-    System.out.println(new Solution().solution(n, data));
   }
 }
