@@ -2,23 +2,24 @@ package programmers.Lv2;
 
 public class P62048 {
   static class Solution {
-    private long gcd(int w, int h) {
-      long a = w, b = h, c = 0L;
-      while (b != 0) {
-        c = a % b;
-        a = b;
-        b = c;
+    private long gcd(long w, long h) {
+      long c = 0L;
+      while (h != 0) {
+        c = w % h;
+        w = h;
+        h = c;
       }
-      return a;
+      return w;
     }
 
     public long solution(int w, int h) {
-      return (w * h) - (long) Math.pow(gcd(w, h), 2);
+      long a = w, b = h;
+      return (long) (a * b) - (a + b - gcd(a, b));
     }
   }
 
   public static void main(String[] args) {
-    new Solution().solution(8, 12);
+    System.out.println(new Solution().solution(8, 2));
   }
 
 }
