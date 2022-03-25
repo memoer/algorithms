@@ -43,13 +43,13 @@ public class P17677 {
 
     private int getUnion() {
       int cnt = 0;
-      for (Entry<String, Integer> entryA : mapA.entrySet()) {
-        if (mapB.containsKey(entryA.getKey())) {
-          cnt += Math.max(mapB.get(entryA.getKey()), entryA.getValue());
-          mapA.put(entryA.getKey(), 0);
-          mapB.put(entryA.getKey(), 0);
+      for (Entry<String, Integer> a : mapA.entrySet()) {
+        if (mapB.containsKey(a.getKey())) {
+          cnt += Math.max(mapB.get(a.getKey()), a.getValue());
+          mapA.put(a.getKey(), 0);
+          mapB.put(a.getKey(), 0);
         } else {
-          cnt += entryA.getValue();
+          cnt += a.getValue();
         }
       }
       for (int value : mapB.values()) {
@@ -60,10 +60,10 @@ public class P17677 {
 
     private int getIntersection() {
       int cnt = 0;
-      for (String a : mapA.keySet()) {
-        for (String b : mapB.keySet()) {
-          if (a.equals(b)) {
-            cnt++;
+      for (Entry<String, Integer> a : mapA.entrySet()) {
+        for (Entry<String, Integer> b : mapB.entrySet()) {
+          if (a.getKey().equals(b.getKey())) {
+            cnt += Math.min(a.getValue(), b.getValue());
             break;
           }
         }
@@ -74,7 +74,7 @@ public class P17677 {
     public int solution(String strA, String strB) {
       mapA = getMap(strA.toLowerCase());
       mapB = getMap(strB.toLowerCase());
-      if (mapA.isEmpty() && mapB.isEmpty()) {
+      if ((mapA.isEmpty() && mapB.isEmpty())) {
         return 65536;
       }
       return (int) Math.floor((double) getIntersection() / getUnion() * 65536);
