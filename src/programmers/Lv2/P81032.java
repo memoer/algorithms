@@ -29,27 +29,67 @@ public class P81032 {
       }
       if (move == 2) {
         if (y == curY) {
-          // 왼쪽
-          if (list.get(curIdx)[y][x + 1] != 'X') {
-            isFollw = false;
+          if (x < curX) {
+            // 왼쪽
+            if (x + 1 < 5 && list.get(curIdx)[y][x + 1] != 'X') {
+              isFollw = false;
+            }
+          } else {
+            // 오른쪽
+            if (x - 1 >= 0 && list.get(curIdx)[y][x - 1] != 'X') {
+              isFollw = false;
+            }
           }
         } else if (x == curX) {
-          // 위
-          if (list.get(curIdx)[y + 1][x] != 'X') {
-            isFollw = false;
+          if (y < curY) {
+            // 위
+            if (y + 1 < 5 && list.get(curIdx)[y + 1][x] != 'X') {
+              isFollw = false;
+            }
+          } else {
+            // 아래
+            if (y - 1 >= 0 && list.get(curIdx)[y - 1][x] != 'X') {
+              isFollw = false;
+            }
           }
-        } else if (list.get(curIdx)[y][x + 1] != 'X' || list.get(curIdx)[y + 1][x] != 'X') {
+        } else {
           // 대각선
-          isFollw = false;
+          if (x < curX) {
+            boolean a = x + 1 < 5 && list.get(curIdx)[y][x + 1] != 'X';
+            if (y < curY) {
+              // 왼쪽, 위 대각선
+              if ((y + 1 < 5 && list.get(curIdx)[y + 1][x] != 'X') || a) {
+                isFollw = false;
+              }
+            } else {
+              // 왼쪽, 아래 대각선
+              if ((y - 1 >= 0 && list.get(curIdx)[y - 1][x] != 'X') || a) {
+                isFollw = false;
+              }
+            }
+          } else {
+            boolean a = x - 1 >= 0 && list.get(curIdx)[y][x - 1] != 'X';
+            if (y < curY) {
+              // 오른쪽, 위 대각선
+              if ((y + 1 < 5 && list.get(curIdx)[y + 1][x] != 'X') || a) {
+                isFollw = false;
+              }
+            } else {
+              // 오른쪽, 아래 대각선
+              if ((y - 1 >= 0 && list.get(curIdx)[y - 1][x] != 'X') || a) {
+                isFollw = false;
+              }
+            }
+          }
         }
       }
     }
 
     private void dfs(int y, int x, int move) {
-      if (move > 2) {
+      if (move > 2 || y < 0 || x < 0 || y > 4 || x > 4) {
         return;
       }
-      if (move != 0 && list.get(curIdx)[y][x] == 'P') {
+      if (move != 0 && (x != curX || y != curY) && list.get(curIdx)[y][x] == 'P') {
         check(y, x, move);
       }
       if (!isFollw) {
@@ -58,15 +98,21 @@ public class P81032 {
       if (y - 1 >= 0) {
         dfs(y - 1, x, move + 1);
       }
+      if (y + 1 >= 0) {
+        dfs(y + 1, x, move + 1);
+      }
       if (x - 1 >= 0) {
         dfs(y, x - 1, move + 1);
+      }
+      if (x + 1 >= 0) {
+        dfs(y, x + 1, move + 1);
       }
     }
 
     public int[] solution(String[][] places) {
       int[] answer = new int[5];
       initialize(places);
-      for (curIdx = 0; curIdx < 1; curIdx++) {
+      for (curIdx = 0; curIdx < 5; curIdx++) {
         isFollw = true;
         byte y = 0;
         while (isFollw && y < 5) {
@@ -93,7 +139,7 @@ public class P81032 {
         { "POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP" },
         { "PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX" },
         { "OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO" },
-        { "PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP" },
+        { "OOPOO", "OPOOO", "OOOOO", "OOOOO", "OOOOO" },
     };
     for (int num : new Solution().solution(places)) {
       System.out.print(num + ", ");
