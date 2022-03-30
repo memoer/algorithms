@@ -1,19 +1,16 @@
 package programmers.Lv2;
 
 import java.util.HashSet;
-import java.util.Queue;
 import java.util.Set;
 
 public class P67257 {
   static class Solution {
     private Set<String[]> set;
-    private String[] candidate;
-    private String expression;
+    private String[] operators;
     private long answer;
 
-    private void initialize(String expression) {
-      final String[] OPERATORS = { "*", "+", "-" };
-      this.expression = expression;
+    private void initialize() {
+      String[] template = { "\\*", "\\+", "\\-" };
       this.answer = 0;
       set = new HashSet<>();
       for (int i = 0; i < 3; i++) {
@@ -25,43 +22,51 @@ public class P67257 {
             if (j == k || i == k) {
               continue;
             }
-            set.add(new String[] { OPERATORS[i], OPERATORS[j], OPERATORS[k] });
+            set.add(new String[] { template[i], template[j], template[k] });
           }
         }
       }
     }
 
-    private int calculate(String operator, int num1, int num2) {
+    private long calculate(String operator, long sum, long num2) {
       switch (operator) {
-        case "+":
-          return num1 + num2;
-        case "-":
-          return num1 - num2;
-        case "*":
-          return num1 * num2;
+        case "\\+":
+          return sum + num2;
+        case "\\-":
+          return sum - num2;
+        case "\\*":
+          return sum * num2;
         default:
           throw new UnsupportedOperationException();
       }
     }
 
-    private long combination(String ex, int idx) {
-      String[] splitted = ex.split(candidate[idx]);
-      if (idx == 1) {
-        int length = splitted.length;
-        long sum = 0;
-        for (int i = 0; i < length; i++) {
-          sum += calculate(candidate[idx], Integer.valueOf(splitted[i]), Integer.valueOf(splitted[i + 1]));
+    private long getSum(String ex, int idx) {
+      String[] splitted = ex.split(operators[idx]);
+      int length = splitted.length;
+
+      if (idx == 0) {
+        long sum = Long.parseLong(splitted[0]);
+        for (int i = 1; i < length; i++) {
+          sum = calculate(operators[idx], sum, Long.parseLong(splitted[i]));
         }
         return sum;
       }
+      long sum = getSum(splitted[0], idx - 1);
+      for (int i = 1; i < length; i++) {
+        sum = calculate(operators[idx], sum, getSum(splitted[i], idx - 1));
+      }
+      return sum;
     }
 
     public long solution(String expression) {
-      initialize(expression);
-
+      initialize();
+      for (String[] op : set) {
+        this.operators = op;
+        answer = Math.max(answer, Math.abs(getSum(expression, 2)));
+      }
       return answer;
     }
-
   }
 
   public static void main(String[] args) {
