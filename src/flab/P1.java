@@ -1,4 +1,4 @@
-package leetcode.flab;
+package flab;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
