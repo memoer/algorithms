@@ -37,6 +37,7 @@ class Solution {
     if (move >= MIDDLE) {
       move = 26 - move;
     }
+    System.out.println(move);
     addAnswer(move, true);
   }
 
@@ -92,6 +93,7 @@ public class P42860 {
     // 왼 2 +1 -> 오3 +1 -> 오2 +1 => 10
     String name2 = "ABABAAAAABA";
     // 이거 결국엔 경우의 수 다 구해서 제일 최솟값 구해야 함
-    System.out.println(new Solution().solution(name2));
+    System.out.println(new Solution().solution("JAN"));
   }
 }
+//2+
