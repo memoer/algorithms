@@ -31,7 +31,7 @@ public class P72411 {
           .filter(
               p -> p.getValue() >= 2 && p.getValue().equals(max.get(p.getKey().length())))
           .map(Entry::getKey)
-          .sorted((pre, cur) -> pre.compareTo(cur)).toArray(String[]::new);
+          .sorted(String::compareTo).toArray(String[]::new);
     }
 
     private void combination(char[] order, boolean[] checked, int course, int idx) {
