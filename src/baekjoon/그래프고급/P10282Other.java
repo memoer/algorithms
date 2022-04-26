@@ -14,7 +14,6 @@ public class P10282Other {
   private static int n;
   private static int d;
   private static int start;
-  private static List<Computer>[] graph;
 
   private static class Computer implements Comparable<Computer> {
     public int idx;
@@ -47,7 +46,7 @@ public class P10282Other {
       d = Integer.parseInt(st.nextToken());
       start = Integer.parseInt(st.nextToken());
 
-      graph = new ArrayList[n];
+      List<Computer>[] graph = new ArrayList[n];
       for (int i = 1; i < n; i++) {
         graph[i] = new ArrayList<>();
       }
