@@ -1,6 +1,7 @@
 package programmers.Lv2;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class P42890 {
   public static void main(String[] args) {
@@ -32,28 +33,52 @@ public class P42890 {
         permutation(0, 0, i + 1, new StringBuilder());
       }
 
-      Set<String> candidateSet = new HashSet<>();
+      Set<String> uniqueSet = new HashSet<>();
       Set<String> check = new HashSet<>();
       for (List<String> l : list) {
-        for (String candidateStr : l) {
+        for (String candidate : l) {
           boolean isDuplicated = false;
           for (int i = 0; i < outterLength; i++) {
-            String key = getKey(candidateStr, i);
-            if (!check.contains(key)) {
-              check.add(key);
-            } else {
+            String key = getKey(candidate, i);
+            if (check.contains(key)) {
               isDuplicated = true;
               break;
             }
+            check.add(key);
           }
           if (!isDuplicated) {
-            candidateSet.add(candidateStr);
+            uniqueSet.add(candidate);
           }
           check.clear();
         }
       }
+      for (String unique : uniqueSet) {
+        int length = unique.length();
+        if (length == 1) {
+          answer += 1;
+          continue;
+        }
+        boolean plusAnswer = true;
+        for (int i = length/2; i >= 0; i--) {
+          StringBuilder sb = new StringBuilder();
+          for (int j = 0; j < length; j++) {
+            if (j == (i * 2) || j == (i * 2) + 1) {
+              continue;
+            }
+            sb.append(unique.charAt(j));
+          }
+          if (uniqueSet.contains(sb.toString().trim())) {
+            plusAnswer= false;
+            break;
+          }
+        }
+        if (plusAnswer) {
+          answer += 1;
+        }
+      }
       return answer;
     }
+
 
     private void permutation(int idx, int count, int end, StringBuilder key) {
       if (count == end) {
