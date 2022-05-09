@@ -1,0 +1,12 @@
+
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÔ‹¶þÿÿÿÿ
+t
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¤ÔÙÔÿÿÿÿÿ
+a
+java:S1192"FDefine a constant instead of duplicating this literal "music" 3 times.(›Ô¤Áüÿÿÿÿ
+7
+java:S1643$"Use a StringBuilder instead.(¶â£¼ÿÿÿÿÿ
+g	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(·µÆ·üÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(—œ¶µþÿÿÿÿ
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(˜ÚÍ´ÿÿÿÿÿ8÷¡›®‡0
