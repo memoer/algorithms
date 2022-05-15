@@ -13,10 +13,3 @@ G
 Template/class-solution,a/a/aa93278e3c85bcd7e6ad73675bb1a0ae2d50843d
 O
 src/programmers/Lv2/P12978.java,2/e/2e926e28ed031cb0a4d502ad9467b4a6974a6835
-B
-src/flab/P200.java,b/d/bd186f264e74f7c094c01871fec62aa073203294
-A
-src/flab/P15.java,e/0/e0dc648fbfb8e0b1b9cabc4fbfce36d77fd7b22d
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
