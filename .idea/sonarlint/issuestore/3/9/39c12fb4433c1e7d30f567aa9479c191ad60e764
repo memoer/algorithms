@@ -1,0 +1,7 @@
+
+b	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ıÀÔ©
+c
+java:S3824("HReplace this "Map.containsKey()" with a call to "Map.computeIfAbsent()".(–æ””ûÿÿÿÿ
+c
+java:S3824+"HReplace this "Map.containsKey()" with a call to "Map.computeIfAbsent()".(ô©·£üÿÿÿÿ
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(´…âøÿÿÿÿ8»´üµŒ0

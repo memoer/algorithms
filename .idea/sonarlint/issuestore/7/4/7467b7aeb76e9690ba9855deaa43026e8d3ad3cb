@@ -1,0 +1,8 @@
+
+m
+java:S1104 "RMake number a static final constant or non-public and provide accessors if needed.( λΎ©ωÿÿÿÿ
+j
+java:S1104!"OMake idx a static final constant or non-public and provide accessors if needed.(Ά‚‰ύÿÿÿÿ
+b	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(Ντω
+S	java:S106
+"9Replace this use of System.out or System.err by a logger.(πÿÿÿÿÿ
