@@ -33,3 +33,25 @@ I
 src/flab/D20220417_1.java,1/0/10b2d4e38d877f771a6e585c1cfa2207faa15771
 I
 src/flab/D20220424_1.java,9/4/94eecc15559b1881aa0095f1b0fe915117c7037a
+O
+src/programmers/Lv2/P72411.java,3/f/3f1d26212c4849974f521bb3e94a8a7a6deefa6a
+O
+src/programmers/Lv2/P42586.java,5/7/57db83e635a9d15144201e15b57ac9babf74dfdf
+O
+src/programmers/Lv2/P81032.java,a/8/a8216d2328a3f0fad0119aaafd12f94785f422f8
+Q
+!src/programmers/Lv2/P72412_2.java,b/2/b21b1d38af9a4d4de92035d8b96d59a6698ba6e2
+O
+src/programmers/Lv2/P72412.java,2/6/26d18e67c06eaf7731b43dc9a67dbd06e0292b0a
+O
+src/programmers/Lv2/P62048.java,8/b/8b15790b757bf6fbd5dc0a17de07f6c77bcd9090
+Q
+!src/programmers/Lv2/P72412_4.java,6/2/62f5f92f07d3f66a53e32397d25753e4a1132eec
+N
+src/baekjoon/core/_P13397.java,d/2/d2a1c9ca4d740c0d8063a14e233e5c80972492c2
+J
+src/temp/Search/B1939.java,4/2/42d36cb72708e8972666d0c007dc03fec7ed6f2e
+I
+src/flab/D20220424_2.java,a/6/a6170f635db83ec95128b915a2146f667ddd0620
+I
+src/flab/D20220501_2.java,2/9/292fed9edf04f132657c797f68be565a578858ac

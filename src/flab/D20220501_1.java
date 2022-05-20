@@ -1,6 +1,6 @@
 package flab;
 
-// https://leetcode.com/problems/first-bad-version/
+// [278] https://leetcode.com/problems/first-bad-version/
 public class D20220501_1 {
   public static void main(String[] args) {
     System.out.println(new Solution().firstAdVersion(5));
