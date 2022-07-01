@@ -16,14 +16,14 @@ public class D20220508_1 {
 
   static class MyHashMap {
     private static class Node {
-      int k;
-      int v;
+      int key;
+      int value;
       Node next;
       Node pre;
 
-      public Node(int k, int v) {
-        this.k = k;
-        this.v = v;
+      public Node(int key, int value) {
+        this.key = key;
+        this.value = value;
         this.next = null;
         this.pre = null;
       }
@@ -52,8 +52,8 @@ public class D20220508_1 {
         this.tab[this.hash(key)] = new Node(key, value);
       } else {
         while (true) {
-          if (node.k == key) {
-            node.v = value;
+          if (node.key == key) {
+            node.value = value;
             return;
           } else if (node.next == null) break;
           node = node.next;
@@ -68,10 +68,10 @@ public class D20220508_1 {
       Node node = this.tab[this.hash(key)];
 
       if (node == null) return -1;
-      else if (node.k == key) return node.v;
+      else if (node.key == key) return node.value;
 
       while ((node = node.next) != null) {
-        if (node.k == key) return node.v;
+        if (node.key == key) return node.value;
       }
       return -1;
     }
@@ -80,12 +80,12 @@ public class D20220508_1 {
       Node node = this.tab[this.hash(key)];
 
       if (node == null) return;
-      else if (node.k == key) {
+      else if (node.key == key) {
         this.tab[this.hash(key)] = null;
         this.size -= 1;
       } else {
         while ((node = node.next) != null) {
-          if (node.k == key) break;
+          if (node.key == key) break;
         }
         if (node == null) return;
         Node preNode = node.pre;
@@ -111,7 +111,7 @@ public class D20220508_1 {
       for (int i = 0; i < PRE_CAPACITY; i++) {
         Node node = this.tab[i];
         if (node == null) continue;
-        newTab[this.hash(node.k)] = node;
+        newTab[this.hash(node.key)] = node;
       }
       this.tab = newTab;
     }
