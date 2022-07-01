@@ -34,8 +34,6 @@ public class P2250 {
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final int N = Integer.parseInt(br.readLine());
-    int root = -1;
-    int[] result = new int[2];
     tree = new int[N + 1][3];
 
     for (int i = 0; i < N; i++) {
@@ -45,19 +43,16 @@ public class P2250 {
       int right = Integer.parseInt(input[2]);
       tree[me][LEFT] = left;
       tree[me][RIGHT] = right;
-      if (left != -1) {
-        tree[left][PARENT] = me;
-      }
-      if (right != -1) {
-        tree[right][PARENT] = me;
-      }
+      if (left != -1) tree[left][PARENT] = me;
+      if (right != -1) tree[right][PARENT] = me;
     }
-    for (int i = 1; i < N + 1; i++) {
-      if (tree[i][PARENT] == 0) {
-        root = i;
-      }
-    }
+
+    int root = -1;
+    for (int i = 1; i < N + 1; i++) if (tree[i][PARENT] == 0) root = i;
+
     inOrder(root, 1);
+
+    int[] result = new int[2];
     for (int i = 1; i <= y; i++) {
       int diff = minMax.get(i)[1] - minMax.get(i)[0] + 1;
       if (result[1] < diff) {
