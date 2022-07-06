@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
-// 아래에는 밑면이 무조건 넓어야 하고,무게가 더 나가야 한다. 
+// 아래에는 밑면이 무조건 넓어야 하고,무게가 더 나가야 한다.
 public class P2655 {
   private static class Brick {
     public int area;
