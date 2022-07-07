@@ -43,7 +43,8 @@ public class P60057 {
   }
 
   public static void main(String[] args) {
-    String[] sArr = { "aabbaccc", "ababcdcdababcdcd", "abcabcdede", "abcabcabcabcdededededede", "xababcdcdababcdcd" };
+    String[] sArr = { "aabbaccc", "ababcdcdababcdcd", "abcabcdede", "abcabcabcabcdededededede", "xababcdcdababcdcd",
+            "aaabbbaaa" };
     for (String s : sArr) {
       System.out.println(new Solution().solution(s));
     }
