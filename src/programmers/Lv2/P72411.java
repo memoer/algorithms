@@ -19,28 +19,24 @@ public class P72411 {
       for (String order : orders) {
         char[] chOrder = order.toCharArray();
         Arrays.sort(chOrder);
-        for (int course : courses) {
-          combination(chOrder, new boolean[order.length()], course, 0);
-        }
+        for (int course : courses) combination(chOrder, new boolean[order.length()], course, 0);
       }
       for (Entry<String, Integer> entry : map.entrySet()) {
         int length = entry.getKey().length();
         max.put(length, !max.containsKey(length) ? entry.getValue() : Math.max(max.get(length), entry.getValue()));
       }
       return map.entrySet().stream()
-          .filter(
-              p -> p.getValue() >= 2 && p.getValue().equals(max.get(p.getKey().length())))
-          .map(Entry::getKey)
-          .sorted(String::compareTo).toArray(String[]::new);
+              .filter(
+                      p -> p.getValue() >= 2 && p.getValue().equals(max.get(p.getKey().length())))
+              .map(Entry::getKey)
+              .sorted(String::compareTo).toArray(String[]::new);
     }
 
     private void combination(char[] order, boolean[] checked, int course, int idx) {
       if (course == 0) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < order.length; i++) {
-          if (checked[i]) {
-            sb.append(order[i]);
-          }
+          if (checked[i]) sb.append(order[i]);
         }
         String key = sb.toString();
         map.put(key, map.getOrDefault(key, 0) + 1);
@@ -55,9 +51,9 @@ public class P72411 {
   }
 
   public static void main(String[] args) {
-    String[] o = { "ABCDE", "AB", "CDAB", "ABDE", "XABYZ", "ABXYZ", "ABCD", "ABCDE", "ABCDE", "ABCDE", "AB", "AB", "AB",
-        "AB", "AB", "AB", "AB", "AB", "AB", "AB" };
-    int[] c = { 2 };
+    String[] o = {"ABCDE", "AB", "CDAB", "ABDE", "XABYZ", "ABXYZ", "ABCD", "ABCDE", "ABCDE", "ABCDE", "AB", "AB", "AB",
+            "AB", "AB", "AB", "AB", "AB", "AB", "AB"};
+    int[] c = {2};
     for (String s : new Solution().solution(o, c)) {
       System.out.print(s + ", ");
     }
