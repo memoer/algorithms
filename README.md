@@ -31,11 +31,11 @@
    - [72412] 순위검색 --> 1[Fail]
      - 이진 탐색을 사용하는데 특정 값을 찾는 게 아니라, 조건을 좁혀가는 방식으로 사용
      - 이진 탐색 활용 방법이 매우 중요!
-   - [81032] 거리 두기 확인하기 -->
 
 ### LeetCode
 
-1. [410__D20220501_3] Split Array Largest Sum -->
+1. [410__D20220501_3] Split Array Largest Sum --> 1[Fail]
+   - https://leetcode.com/problems/split-array-largest-sum/
 2. [278__D20220501_1] First Bad Version -->
 
 # 복기한 문제들
