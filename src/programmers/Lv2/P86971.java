@@ -4,10 +4,12 @@ import java.util.*;
 
 public class P86971 {
   public static void main(String[] args) {
-//    int n = 9;
-//    int[][] wires = {{1, 3}, {2, 3}, {3, 4}, {4, 5}, {4, 6}, {4, 7}, {7, 8}, {7, 9}};
-    int n = 4;
-    int[][] wires = {{1,2},{2,3},{3,4}};
+    //    int n = 9;
+    //    int[][] wires = {{1, 3}, {2, 3}, {3, 4}, {4, 5}, {4, 6}, {4, 7}, {7, 8}, {7, 9}};
+    //    int n = 4;
+    //    int[][] wires = {{1,2},{2,3},{3,4}};
+    int n = 3;
+    int[][] wires = {{1, 2}, {2, 3}};
     System.out.println(new Solution().solution(n, wires));
   }
 
@@ -26,8 +28,7 @@ public class P86971 {
       for (int[] wire : wires) {
         connected[wire[0]][wire[1]] = false;
         connected[wire[1]][wire[0]] = false;
-        int candidate = getCandidate();
-        answer = Math.min(answer, candidate);
+        answer = Math.min(answer, getCandidate());
         connected[wire[0]][wire[1]] = true;
         connected[wire[1]][wire[0]] = true;
       }
@@ -59,6 +60,7 @@ public class P86971 {
         int count = 0;
         Queue<Integer> q = new LinkedList<>();
         q.offer(i);
+        visited[i] = true;
         while (!q.isEmpty()) {
           count += 1;
           int cur = q.poll();
