@@ -1,17 +1,12 @@
 package programmers.Lv3;
 
-import java.time.Duration;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class P17676 {
   public static void main(String[] args) {
     String[] lines = {
-            "2016-09-15 01:00:04.002 2.0s",
-            "2016-09-15 01:00:07.000 2s"
+            "2016-09-15 00:00:00.000 3s"
     };
     System.out.println(new Solution().solution(lines));
   }
@@ -25,32 +20,43 @@ public class P17676 {
      */
     // return -> 로그 데이터 lines 배열에 대해 초당 최대 처리량 리턴
     public int solution(String[] lines) {
-      int answer = 0;
-      List<LocalTime[]> logs = Arrays.stream(lines)
-              .map(s -> {
-                String[] split = s.split(" ");
-                LocalTime end = LocalTime.parse(split[1]);
-                LocalTime start = end
-                        .plusNanos(1_000_000)
-                        .minus(Duration.parse("PT" + split[2]));
-                return new LocalTime[]{start, end};
-              })
-              .collect(Collectors.toList());
+      List<Time> logs = new ArrayList<>();
+      for (String line : lines) {
+        String[] split = line.split(" ");
+        double seconds = Double.parseDouble(split[2].substring(0, split[2].length() - 1));
+        String[] time = split[1].split(":");
+
+        double end = 0;
+        end += Double.parseDouble(time[0]) * 3600;
+        end += Double.parseDouble(time[1]) * 60;
+        end += Double.parseDouble(time[2]);
+
+        logs.add(new Time(end - seconds + 0.001, end));
+      }
+
+
+      int answer = 1;
       int size = logs.size();
       for (int i = 0; i < size - 1; i++) {
-        int throughput = 0;
-        LocalTime aEnd = logs.get(i)[1];
+        int count = 1;
+        double aEnd = logs.get(i).end + 1;
         for (int j = i + 1; j < size; j++) {
-          LocalTime bStart = logs.get(j)[0];
-          if (bStart.isBefore(aEnd)) {
-            LocalTime bEnd = logs.get(j)[1];
-            if (bEnd.isAfter(aEnd) || bEnd.equals(aEnd)) throughput += 1;
-          } else if (ChronoUnit.SECONDS.between(aEnd, bStart) < 1) throughput += 1;
-          else break;
+          double bStart = logs.get(j).start;
+          if (aEnd > bStart) count += 1;
         }
-        answer = Math.max(answer, throughput);
+        answer = Math.max(answer, count);
       }
-      return answer + 1;
+      return answer;
+    }
+
+    private static class Time {
+      private final double start;
+      private final double end;
+
+      public Time(double start, double end) {
+        this.start = start;
+        this.end = end;
+      }
     }
   }
 }
