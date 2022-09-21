@@ -17,11 +17,12 @@ public class P42890_2 {
     };
     System.out.println(new P42890_2.Solution().solution(relation));
   }
+
   static class Solution {
     public int solution(String[][] relation) {
       int n = relation.length;        // n개의 데이터
       int m = relation[0].length;     // m개의 컬럼
-      ArrayList<Integer> list = new ArrayList<Integer>();
+      ArrayList<Integer> list = new ArrayList<>();
 
       // 완전 탐색을 돈다.
       for (int i = 1; i < (1 << m); i++) {
@@ -32,9 +33,7 @@ public class P42890_2 {
           // m개의 컬럼
           for (int k = 0; k < m; k++) {
             // 모든 경우의 수 & 해당 라인 데이터 조합.
-            if ((i & (1 << k)) > 0) {
-              now += relation[j][k];
-            }
+            if ((i & (1 << k)) > 0) now += relation[j][k];
           }
           s.add(now);
         }
@@ -46,9 +45,7 @@ public class P42890_2 {
     public boolean possi(List<Integer> list, int now) {
       for (int i = 0; i < list.size(); i++) {
         // 같으면 최소성을 만족하지 못함.
-        if ((list.get(i) & now) == list.get(i)) {
-          return false;
-        }
+        if ((list.get(i) & now) == list.get(i)) return false;
       }
       return true;
     }

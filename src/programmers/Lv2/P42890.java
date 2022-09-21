@@ -1,7 +1,6 @@
 package programmers.Lv2;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class P42890 {
   public static void main(String[] args) {
@@ -30,7 +29,7 @@ public class P42890 {
 
       for (int i = 0; i < this.innerLength; i++) {
         this.list[i] = new ArrayList<>();
-        permutation(0, 0, i + 1, new StringBuilder());
+        combination(0, 0, i + 1, new StringBuilder());
       }
 
       Set<String> uniqueSet = new HashSet<>();
@@ -80,14 +79,14 @@ public class P42890 {
     }
 
 
-    private void permutation(int idx, int count, int end, StringBuilder key) {
+    private void combination(int idx, int count, int end, StringBuilder key) {
       if (count == end) {
         this.list[end - 1].add(key.toString().trim());
         return;
       }
       for (; idx < this.innerLength; idx++) {
         key.append(idx).append(" ");
-        permutation(idx + 1, count + 1, end, key);
+        combination(idx + 1, count + 1, end, key);
         int kLength = key.length();
         key.delete(kLength - 2, kLength);
       }
