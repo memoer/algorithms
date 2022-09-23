@@ -1,21 +1,7 @@
 package programmers.Lv3;
 
-import java.util.*;
-
+// https://code-lab1.tistory.com/152
 public class P60059 {
-  //  public static void main(String[] args) {
-  //    int[][] key = {{0, 0, 0}, {1, 0, 0}, {0, 1, 1}};
-  //    int[][] lock = {{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
-  //    new P60059().solution(key, lock);
-  //  }
-  //
-  //  private void print() {
-  //    for (int[] ints : lock) {
-  //      for (int anInt : ints) System.out.print(anInt + ", ");
-  //      System.out.println();
-  //    }
-  //    System.out.println("--");
-  //  }
   /**
    * key -> M x M [3 <= M <= 20]
    * - M은 항상 N이하입니다. 즉, key의 이차원 배열은 lock의 이차원 배열보다 항상 같거나 작다.
@@ -23,146 +9,88 @@ public class P60059 {
    * key, lock의 원소는 0(or)1 로 이루어져 있음. [0->홈 부분, 1->돌기 부분]
    */
   // 열쇠로 자물쇠를 열 수 있으면 true, 없으면 false 반환
-  /**
-   * 자물쇠에는 홈이 파여 있고, 열쇠 또한 홈과 돌기 부분이 있습니다.
-   * 열쇠는 회전과 이동이 가능하며, 열쇠의 돌기 부분을 자물쇠의 홈 부분에 딱 맞게 채우면 자물쇠가 열리게 되는 구조
-   * 자물쇠의 모든 홈을 채워 비어있는 곳이 없어야 자물쇠를 열 수 있습니다.
-   */
-  int[][] key;
-  int[][] lock;
-  int keyLen;
-  int lockLen;
-  List<Location> lockLocList;
-  int num;
-  boolean ans;
+  private int[][] key;
+  private int[][] lock;
+  private int[][] extendedLock;
+  private int keyLen;
+  private int lockLen;
+
+  public static void main(String[] args) {
+    int[][] key = {{0, 0, 0}, {1, 0, 0}, {0, 1, 1}};
+    int[][] lock = {{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
+    new P60059().solution(key, lock);
+  }
 
   public boolean solution(int[][] key, int[][] lock) {
     this.key = key;
     this.lock = lock;
     this.keyLen = key.length;
     this.lockLen = lock.length;
-    this.lockLocList = new ArrayList<>();
-    this.num = 0;
-    this.ans = false;
+    this.extendedLock = getExtendedLock();
 
-    if (sync()) return ans;
     for (int i = 0; i < 4; i++) {
-      Set<Location> set = rotationKey();
-    }
-    return ans;
-  }
-
-  private boolean sync() {
-    int minY = Integer.MAX_VALUE;
-    int maxY = Integer.MIN_VALUE;
-    int minX = Integer.MAX_VALUE;
-    int maxX = Integer.MIN_VALUE;
-
-    for (int i = 0; i < lockLen; i++) {
-      for (int j = 0; j < lockLen; j++) {
-        int v = lock[i][j];
-        if (v == 1) continue;
-        num += 1;
-        minY = Math.min(minY, i);
-        maxY = Math.max(maxY, i);
-        minX = Math.min(minX, i);
-        maxX = Math.max(maxX, i);
-        if (keyLen == lockLen) lockLocList.add(new Location(i, j));
-      }
-    }
-    if (isImpossible(minY, maxY, minX, maxX)) return true;
-    replaceLock(minY, maxY, minX, maxX);
-    return false;
-  }
-
-  private boolean isImpossible(int minY, int maxY, int minX, int maxX) {
-    int diffY = maxY - minY;
-    int diffX = maxX - minX;
-    return Math.max(diffX, diffY) > keyLen;
-  }
-
-  private void replaceLock(int minY, int maxY, int minX, int maxX) {
-    int start = Math.min(minY, minX);
-    int end = Math.max(maxY, maxX);
-    lockLen = Math.max(keyLen, end - start + 1);
-    int[][] tmp = new int[lockLen][lockLen];
-    for (int i = 0; i < lockLen; i++) for (int j = 0; j < lockLen; j++) tmp[i][j] = 1;
-    for (int i = start, y = 0; i <= end; i++, y++) {
-      for (int j = start, x = 0; j <= end; j++, x++) {
-        if (lock[i][j] == 0) lockLocList.add(new Location(y, x));
-        tmp[y][x] = lock[i][j];
-      }
-    }
-    lock = tmp;
-  }
-
-  private Set<Location> rotationKey() {
-    Set<Location> list = new HashSet<>();
-    int[][] tmp = new int[keyLen][keyLen];
-    for (int i = 0; i < keyLen; i++)
-      for (int j = 0; j < keyLen; j++)
-        tmp[j][keyLen - i - 1] = key[i][j];
-    for (int i = 0; i < keyLen; i++)
-      for (int j = 0; j < keyLen; j++)
-        if (tmp[i][j] == 1) list.add(new Location(i, j));
-    return list;
-  }
-
-  private void move(List<int[]> list, int direct) {
-    int size = list.size();
-    switch (direct) {
-      case 0: // up
-        break;
-      case 1: // down
-        break;
-      case 2: // left
-        break;
-      case 3: // right
-        break;
-    }
-  }
-
-  private boolean check(Set<Location> set, Set<Set<Location>> visited) {
-    if (isUnlock(set)) {
-      ans = true;
-      return true;
-    }
-    for (int i = 0; i < 4; i++) {
-      visited.add(set);
-      move();
-      visited.remove(set);
-    }
-  }
-
-  private boolean isUnlock(Set<Location> set) {
-    int acc = num;
-    for (Location location : lockLocList) {
-      if (set.contains(location)) acc -= 1;
-      if (acc == 0) return true;
+      if (check()) return true;
+      if (i != 3) rotate();
     }
     return false;
   }
 
-  private static class Location {
-    int y;
-    int x;
+  private int[][] getExtendedLock() {
+    /**
+     * 확장 길이
+     * 1. lock 길이에서 위 아래로 keyLen을 2번씩 더한다.
+     * 2. 확장된 배열에서 (0,0)부터 검사를 해야하므로, key와 겹쳐야 한다. -> 그러므로 위 아래 1개씩 빼준다. [-2]
+     */
+    int extendedLockLen = lockLen + keyLen * 2 - 2;
+    int[][] extendedLock = new int[extendedLockLen][extendedLockLen]; // 확장시킨 배열
 
-    public Location(int y, int x) {
-      this.y = y;
-      this.x = x;
+    // (key의 길이-1)만큼 확장시켜주었으니, 확장된 배열에서 (key 길이-1)부터 시작한다.
+    int start = keyLen - 1;
+    // 시작지점부터 lock의 길이만큼 반복문을 돈다.
+    int end = start + lockLen;
+    for (int i = start; i < end; i++) {
+      for (int j = start; j < end; j++) {
+        int y = i - (keyLen - 1);
+        int x = j - (keyLen - 1);
+        // 확장된 배열에 lock을 표시한다.
+        extendedLock[i][j] = lock[y][x];
+      }
     }
+    return extendedLock;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      Location location = (Location) o;
-      return y == location.y && x == location.x;
-    }
+  private void rotate() {
+    int len = key.length;
+    int[][] tmp = new int[len][len];
+    for (int i = 0; i < len; i++) for (int j = 0; j < len; j++) tmp[i][j] = key[len - j - 1][i];
+    this.key = tmp;
+  }
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(y, x);
+  private boolean check() {
+    // 확장된 배열 끝까지 모두 돌면 안된다. 끝에서 key 검사를 할 수 없다. [배열을 넘어섬]
+    int len = extendedLock.length - keyLen + 1;
+    for (int i = 0; i < len; i++) {
+      for (int j = 0; j < len; j++) {
+        combine(i, j);
+        if (isUnlock()) return true;
+        restore(i, j);
+      }
     }
+    return false;
+  }
+
+  private void combine(int i, int j) {
+    for (int k = 0; k < keyLen; k++) for (int l = 0; l < keyLen; l++) extendedLock[k + i][l + j] += key[k][l];
+  }
+
+  private boolean isUnlock() {
+    int start = keyLen - 1;
+    int end = start + lockLen;
+    for (int i = start; i < end; i++) for (int j = start; j < end; j++) if (extendedLock[i][j] != 1) return false;
+    return true;
+  }
+
+  private void restore(int i, int j) {
+    for (int k = 0; k < keyLen; k++) for (int l = 0; l < keyLen; l++) extendedLock[i + k][j + l] -= key[k][l];
   }
 }

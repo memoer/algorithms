@@ -34,6 +34,10 @@
    - [12913_땅따먹기](https://school.programmers.co.kr/learn/courses/30/lessons/12913)
 2. Lv3
    - [43238_입국심사](https://school.programmers.co.kr/learn/courses/30/lessons/43238)
+   - [60059_자물쇠와 열쇠](https://school.programmers.co.kr/learn/courses/30/lessons/60059)
+     - 아예 구현조차 못함...
+   - [92344_파괴되지 않은 건물](https://school.programmers.co.kr/learn/courses/30/lessons/92344)
+   - [42892_길 찾기 게임](https://school.programmers.co.kr/learn/courses/30/lessons/42892)
 
 # 복기한 문제들
 
