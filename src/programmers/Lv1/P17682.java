@@ -3,109 +3,85 @@ package programmers.Lv1;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 3번의 기회 각 기회마다 0~10점 S영역 -> 1제곱, D영역 -> 2제곱, T영역-> 3제곱 계산
+ * <p>
+ * *상 -> 해당/바로 전 점수 모두 2배 *상 -> 바로 전 점수 없을 경우, 해당 점수만 2배 *상 -> 중첩 가능, 이 경우 점수는 4배가 됨 #상 -> 해당 점수 마이너스 *상, #상 -> 중첩 가능. 이
+ * 경우, #상 점수는 -2배
+ * <p>
+ * S, D, T은 점수마다 하나씩 존재 *상, #상 -> 점수마다 하나만 존재하거나 없음
+ * <p>
+ * 인풋 값의 포맷은 "점수|영역|상"
+ */
 public class P17682 {
-  static class Solution {
-    private final char NUMBER = 'N';
-    private final char BONUS = 'B';
-    private final char AWARD = 'A';
-    private List<String> stageList;
-    private int[] scoreArr;
 
-    private List<String> getStageList(String dartResult) {
-      List<String> sList = new ArrayList<>();
-      int resultLength = dartResult.length();
-      int idx = 0;
-      for (int i = 0; i < resultLength; i++) {
-        char c = dartResult.charAt(i);
-        if (getType(c) != NUMBER || (c == '0' && idx == i - 1)) {
-          continue;
-        }
-        sList.add(dartResult.substring(idx, i));
-        idx = i;
-      }
-      sList.add(dartResult.substring(idx, resultLength));
-      return sList;
-    }
+    static class Solution {
+        private int score = -1;
+        private int square = -1;
+        private char award = '\n';
+        private int idx = 0;
 
-    private char getType(char c) {
-      if (c >= 48 && c <= 57) {
-        return NUMBER;
-      } else if (c == 'S' || c == 'D' || c == 'T') {
-        return BONUS;
-      } else if (c == '*' || c == '#') {
-        return AWARD;
-      }
-      return '\0';
-    }
-
-    private int getNumber(String s) {
-      char c = s.charAt(0);
-      if (c == 49 && s.charAt(1) == 48) {
-        return 10;
-      }
-      return c - '0';
-    }
-
-    private int getBonus(char c) {
-      switch (c) {
-        case 'S':
-          return 1;
-        case 'D':
-          return 2;
-        case 'T':
-          return 3;
-        default:
-          throw new UnsupportedOperationException();
-      }
-    }
-
-    private int getAward(char c, int i) {
-      if (c == '*') {
-        if (i != 0) {
-          scoreArr[i - 1] *= 2;
-        }
-        return 2;
-      }
-      return -1;
-    }
-
-    private int getResult() {
-      int result = 0;
-      for (int i = 0; i < scoreArr.length; i++) {
-        result += scoreArr[i];
-      }
-      return result;
-    }
-
-    public int solution(String dartResult) {
-      stageList = getStageList(dartResult);
-      int stageLength = stageList.size();
-      scoreArr = new int[stageLength];
-
-      for (int i = 0; i < stageLength; i++) {
-        String stage = stageList.get(i);
-        int score = 0;
-        for (int j = 0; j < stage.length(); j++) {
-          char c = stage.charAt(j);
-          char type = getType(c);
-          if (type == NUMBER) {
-            score = getNumber(stage.substring(0, 2));
-            if (score == 10) {
-              j += 1;
+        public int solution(String dartResult) {
+            int len = dartResult.length();
+            List<Integer> list = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < len; i++) {
+                char ch = dartResult.charAt(i);
+                if (Character.isDigit(ch)) {
+                    sb.append(ch);
+                    if (i != 0 && score != -1) {
+                        calculate(list);
+                        addIdx();
+                    }
+                } else {
+                    if (score == -1) {
+                        score = Integer.parseInt(sb.toString());
+                        sb.setLength(0);
+                    }
+                    if (ch == '*' || ch == '#') {
+                        award = ch;
+                    } else if (square == -1) {
+                        square = getSquare(ch);
+                    }
+                }
             }
-          } else if (type == BONUS) {
-            score = (int) Math.pow(score, getBonus(c));
-          } else if (type == AWARD) {
-            score *= getAward(c, i);
-          }
-        }
-        scoreArr[i] = score;
-      }
-      return getResult();
-    }
-  }
+            calculate(list);
 
-  public static void main(String[] args) {
-    System.out.println(new Solution().solution("1D2S#10S"));
-  }
+            return list.stream().reduce(0, Integer::sum);
+        }
+
+        private void calculate(List<Integer> list) {
+            int n = (int) Math.pow(score, square);
+            if (award == '*') {
+                list.add(n * 2);
+                if (idx - 1 >= 0) {
+                    list.set(idx - 1, list.get(idx - 1) * 2);
+                }
+            } else if (award == '#') {
+                list.add(-n);
+            } else {
+                list.add(n);
+            }
+        }
+
+        private void addIdx() {
+            score = -1;
+            square = -1;
+            award = '\n';
+            idx += 1;
+        }
+
+        private int getSquare(char ch) {
+            return switch (ch) {
+                case 'S' -> 1;
+                case 'D' -> 2;
+                case 'T' -> 3;
+                default -> throw new IllegalStateException("Unexpected value: " + ch);
+            };
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().solution("1D2S#10S"));
+    }
 }
