@@ -4,10 +4,12 @@ public class P70128 {
   static class Solution {
     public int solution(int[] a, int[] b) {
       int answer = 0;
-      int length = a.length;
-      for (int i = 0; i < length; i++) {
-        answer += (a[i] * b[i]);
+
+      int len = a.length;
+      for (int i = 0; i < len; i++) {
+        answer += a[i] * b[i];
       }
+
       return answer;
     }
   }
