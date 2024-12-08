@@ -14,6 +14,7 @@ public class P77484 {
       if (zero == 6) {
         return new int[] { 1, 6 };
       }
+
       for (int lotto : lottos) {
         for (int num : win_nums) {
           if (lotto == num) {
