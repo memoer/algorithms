@@ -1,6 +1,6 @@
 package programmers.Lv2;
 
-public class P42860Re {
+public class P42860_2 {
 
     static class Solution {
         public int solution(String name) {
