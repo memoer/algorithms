@@ -6,7 +6,7 @@ import java.util.Set;
 public class P67257 {
   static class Solution {
     private Set<String[]> set;
-    private String[] operators;
+    private String[] op;
     private long answer;
 
     private void initialize() {
@@ -28,42 +28,40 @@ public class P67257 {
       }
     }
 
-    private long calculate(String operator, long sum, long num2) {
-      switch (operator) {
-        case "\\+":
-          return sum + num2;
-        case "\\-":
-          return sum - num2;
-        case "\\*":
-          return sum * num2;
-        default:
-          throw new UnsupportedOperationException();
-      }
-    }
-
     private long getSum(String ex, int idx) {
-      String[] splitted = ex.split(operators[idx]);
+      String[] splitted = ex.split(op[idx]);
       int length = splitted.length;
 
       if (idx == 0) {
         long sum = Long.parseLong(splitted[0]);
         for (int i = 1; i < length; i++) {
-          sum = calculate(operators[idx], sum, Long.parseLong(splitted[i]));
+          sum = calculate(op[idx], sum, Long.parseLong(splitted[i]));
         }
         return sum;
       }
+
       long sum = getSum(splitted[0], idx - 1);
       for (int i = 1; i < length; i++) {
-        sum = calculate(operators[idx], sum, getSum(splitted[i], idx - 1));
+        sum = calculate(op[idx], sum, getSum(splitted[i], idx - 1));
       }
       return sum;
+    }
+
+    private long calculate(String operator, long sum, long num2) {
+      return switch (operator) {
+        case "\\+" -> sum + num2;
+        case "\\-" -> sum - num2;
+        case "\\*" -> sum * num2;
+        default -> throw new UnsupportedOperationException();
+      };
     }
 
     public long solution(String expression) {
       initialize();
       for (String[] op : set) {
-        this.operators = op;
-        answer = Math.max(answer, Math.abs(getSum(expression, 2)));
+        this.op = op;
+        long sum = getSum(expression, 2);
+        answer = Math.max(answer, Math.abs(sum));
       }
       return answer;
     }
