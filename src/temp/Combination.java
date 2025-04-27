@@ -3,7 +3,7 @@ package temp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Permutation {
+public class Combination {
 
     private static List<String> list = new ArrayList<>();
 
@@ -12,18 +12,18 @@ public class Permutation {
         list.add("b");
         list.add("c");
         int n = list.size();
-        permutation(n, 3, 0);
+        combination(n,2, 0, new ArrayList<>());
     }
 
-    private static void permutation(int n, int r, int depth) {
-        if (r == depth) {
-            System.out.println(list.subList(0, r));
+    private static void combination(int n, int r, int start, List<String> temp) {
+        if (temp.size() == r) {
+            System.out.println(temp);
             return;
         }
-        for (int i = depth; i < n; i++) {
-            swap(i, depth);
-            permutation(n, r, depth + 1);
-            swap(i, depth);
+        for (int i = start; i < n; i++) {
+            temp.add(list.get(i));
+            combination(n, r, i + 1, temp);
+            temp.removeLast();
         }
     }
 
