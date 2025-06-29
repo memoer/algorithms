@@ -11,15 +11,16 @@ public class Permutation {
         list.add("a");
         list.add("b");
         list.add("c");
-        int n = list.size();
-        permutation(n, 3, 0);
+        int size = list.size();
+        permutation(size, 2, 0);
     }
 
     private static void permutation(int n, int r, int depth) {
         if (r == depth) {
-            System.out.println(list.subList(0, r));
+            System.out.println(list);
             return;
         }
+
         for (int i = depth; i < n; i++) {
             swap(i, depth);
             permutation(n, r, depth + 1);
