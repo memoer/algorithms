@@ -12,9 +12,9 @@ public class P43238_2 {
     private static class Solution {
         public long solution(int n, int[] times) {
             Arrays.sort(times);
-            long l = 0L;
-            long r = (long) n * times[times.length - 1];
-            long result = 0L;
+            long l = 0;
+            long r = (long) times[times.length - 1] * n;
+            long result = 0;
             while (l <= r) {
                 long mid = (l + r) / 2;
                 long acc = 0;
@@ -22,7 +22,7 @@ public class P43238_2 {
                     acc += mid / time;
                 }
                 if (acc >= n) {
-                    r = mid - 1;
+                   r= mid - 1;
                     result = mid;
                 } else {
                     l = mid + 1;
@@ -30,5 +30,6 @@ public class P43238_2 {
             }
             return result;
         }
+
     }
 }
