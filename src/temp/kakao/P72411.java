@@ -24,8 +24,10 @@ public class P72411 {
   private int[] max;
 
   public static void main(String[] args) {
-    String[] orders = new String[]{"XYZ", "XWY", "WXA"};
-    int[] courses = new int[]{2, 3, 4};
+    String[] orders = {
+        "XYZ", "XWY", "WXA"
+    };
+    int[] courses = {2, 3, 4};
     for (String s : new P72411().solution(orders, courses)) System.out.print(s + ", ");
     System.out.println();
   }
