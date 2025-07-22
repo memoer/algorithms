@@ -1,132 +1,82 @@
 package programmers.highscore.dfsbfs;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 public class P87694 {
 
     public static void main(String[] args) {
-        int[][] rectangle = {
-            {1, 1, 7, 4},
-            {3, 2, 5, 5},
-            {4, 3, 6, 9},
-            {2, 6, 8, 8},
-        };
+        int[][] rectangle = {{1, 1, 7, 4}, {3, 2, 5, 5}, {4, 3, 6, 9}, {2, 6, 8, 8},};
         int solution = new Solution().solution(rectangle, 1, 3, 7, 8);
         System.out.println(solution);
     }
 
     private static class Solution {
 
-        private int len;
-        private int[][] rectangle;
-        private final int[][] direct = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        boolean[][] map = new boolean[102][102];
+        boolean[][] visited = new boolean[102][102];
+        int[][] rectangle;
+        int[][] directions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
-        public int solution(int[][] rectangle, int characterX, int characterY, int itemX, int itemY) {
-            this.len = rectangle.length;
+        public int solution(int[][] rectangle, int cx, int cy, int ix, int iy) {
+            init(rectangle);
+            return bfs(cx * 2, cy * 2, ix * 2, iy * 2) / 2;
+        }
+
+        private void init(int[][] rectangle) {
             this.rectangle = rectangle;
-            Set<String> visited = new HashSet<>();
-            Set<String> load = init();
-            int idx = 0;
-
-            Queue<int[]> q = new LinkedList<>();
-            q.add(new int[]{characterX, characterY, 0});
-            visited.add(characterX + "" + characterY);
-            while (!q.isEmpty()) {
-                int[] loc = q.poll();
-                if (loc[0] == itemX && loc[1] == itemY) {
-                    return loc[2];
-                }
-                for (int[] v : direct) {
-                    int[] next = getNext(loc, v);
-                    if (next == null) {
-                        continue;
+            for (int[] v : rectangle) {
+                v[0] *= 2;
+                v[1] *= 2;
+                v[2] *= 2;
+                v[3] *= 2;
+            }
+            for (int[] v : rectangle) {
+                for (int i = v[0]; i <= v[2]; i++) {
+                    for (int j = v[1]; j <= v[3]; j++) {
+                        map[i][j] = true;
                     }
-                    idx = changeIdx(idx, next);
-                    String s = next[0] + "" + next[1];
-                    if (visited.contains(s) || !load.contains(s)) {
-                        continue;
-                    }
-                    if (!isLine(next, rectangle[idx])) {
-                        continue;
-                    }
-                    q.offer(new int[]{next[0], next[1], loc[2] + 1});
-                    visited.add(s);
                 }
             }
+        }
 
+        private int bfs(int cx, int cy, int ix, int iy) {
+            Queue<int[]> q = new LinkedList<>();
+            q.offer(new int[]{cx, cy, 0});
+            visited[cx][cy] = true;
+
+            while (!q.isEmpty()) {
+                int[] poll = q.poll();
+                if (poll[0] == ix && poll[1] == iy) {
+                    return poll[2];
+                }
+
+                for (int[] direction : directions) {
+                    int nx = poll[0] + direction[0];
+                    int ny = poll[1] + direction[1];
+                    if (isAvailable(nx, ny)) {
+                        q.offer(new int[]{nx, ny, poll[2] + 1});
+                        visited[nx][ny] = true;
+                    }
+                }
+            }
             return -1;
         }
 
-        private int[] getNext(int[] loc, int[] next) {
-            int nextX = loc[0] + next[0];
-            int nextY = loc[1] + next[1];
-            return nextX >= 1 && nextX <= 50 && nextY >= 1 && nextY <= 50 ? new int[]{nextX, nextY} : null;
-        }
-
-        private Set<String> init() {
-            Set<String> set = new HashSet<>();
-            Deque<int[]> dq = new ArrayDeque<>();
-            int idx = 0;
-            dq.push(new int[]{rectangle[idx][0], rectangle[idx][1]});
-
-            while (!dq.isEmpty()) {
-                int[] loc = dq.poll();
-                idx = changeIdx(idx, loc);
-                for (int[] v : direct) {
-                    int[] next = getNext(loc, v);
-                    if (next == null) {
-                        continue;
-                    }
-
-                    String s = next[0] + "" + next[1];
-                    if (set.contains(s)) {
-                        continue;
-                    } else if (!canGo(idx, next)) {
-                        continue;
-                    }
-
-                    dq.push(next);
-                    set.add(s);
-                }
+        private boolean isAvailable(int x, int y) {
+            if (visited[x][y]) {
+                return false;
+            } else if (!map[x][y]) {
+                return false;
             }
-            return set;
-        }
 
-        private int changeIdx(int idx, int[] target) {
-            for (int i = 0; i < len; i++) {
-                if (i == idx) {
-                    continue;
-                }
-                int[] r = rectangle[i];
-                if (r[0] <= target[0] && r[1] <= target[1] && r[2] >= target[0] && r[3] >= target[1]) {
-                    return i;
-                }
-            }
-            return idx;
-        }
-
-        private boolean canGo(int idx, int[] next) {
-            int[] cur = rectangle[idx];
-            for (int i = 0; i < len; i++) {
-                if (i == idx) {
-                    continue;
-                }
-                int[] r = rectangle[i];
-                if (r[0] < next[0] && r[1] < next[1] && r[2] > next[0] && r[3] > next[1]) {
+            for (int[] v : this.rectangle) {
+                boolean isIn = x > v[0] && y > v[1] && x < v[2] && y < v[3];
+                if (isIn) {
                     return false;
                 }
             }
-            return isLine(next, cur);
-        }
-
-        private boolean isLine(int[] next, int[] cur) {
-            return (next[0] == cur[0] || next[0] == cur[2] || next[1] == cur[1] || next[1] == cur[3]) &&
-                (next[0] >= cur[0] && next[1] >= cur[1] && next[0] <= cur[2] && next[1] <= cur[3]);
+            return true;
         }
     }
 }
