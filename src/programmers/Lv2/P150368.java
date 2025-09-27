@@ -43,7 +43,7 @@ public class P150368 {
                             continue;
                         }
 
-                        int price = emoticons[i] * (100 - r) / 100;
+                        int price = (int) (emoticons[i] - emoticons[i] * r / 100.0);
                         sum += price;
                     }
 
@@ -54,7 +54,7 @@ public class P150368 {
                     }
                 }
 
-                if (answer[0] == 0 || answer[0] < subscribers) {
+                if (answer[0] < subscribers) {
                     answer[0] = subscribers;
                     answer[1] = totalSales;
                 } else if (answer[0] == subscribers) {
